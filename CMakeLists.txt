@@ -57,7 +57,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
 
 
 ################################################################################
-# Library: image_processing
+# Library: imgproc
 
 add_library(imgproc SHARED
     imgproc.cpp
