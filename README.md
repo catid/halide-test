@@ -29,7 +29,7 @@ cd ..
 
 ## Running
 
-Run the benchmark:
+Run the benchmark with v14:
 
 ```bash
 mkdir build14
@@ -41,9 +41,7 @@ make -j
 
 Note the speed.  Should be the same each time within 10 microseconds.
 
-Edit the CMakeLists.txt to switch to the other `HALIDE_VERSION=xxx`.  You will also need to edit the `generators.cpp` to select the other version of `using_autoscheduler()`.
-
-Clean and run the benchmark again:
+Run the benchmark with v15:
 
 ```bash
 mkdir build15
@@ -53,6 +51,8 @@ make -j
 ./benchmark
 ```
 
-## Result
+## Results
 
 I'd expect them to produce the same speed output, but v15 runs 50% slower than v14 without running an auto-scheduler.
+
+With auto-scheduler enabled, they're about the same.
