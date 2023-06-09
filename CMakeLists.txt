@@ -98,7 +98,7 @@ function(generate_target)
         set(NO_WHOLE_ARCHIVE_FLAG "--no-whole-archive")
     endif()
 
-    # This causes the generated library to get sucked up into the image_processing.so
+    # This causes the generated library to get sucked up into the imgproc library
     # and the symbol persists even if it's not used by anything
     target_link_libraries(imgproc
         PUBLIC
