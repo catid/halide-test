@@ -55,3 +55,8 @@ cmake ..
 make -j
 ./benchmark
 ```
+
+## Result
+
+I'd expect them to produce the same speed output, but v15 runs 50% slower than v14 without running an auto-scheduler.
+

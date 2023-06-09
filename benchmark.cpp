@@ -49,8 +49,8 @@ void Benchmark()
         }
     }
 
-    const int trials = 100;
-    for (int i = 0; i < 100; ++i) {
+    const int trials = 10000;
+    for (int i = 0; i < trials; ++i) {
         uint64_t t0 = chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count();
         ImgProcTest(gradxy, local_max, sparse_affine_images);
         uint64_t t1 = chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count();

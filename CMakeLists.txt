@@ -100,6 +100,8 @@ target_link_libraries(generators PRIVATE Halide::Generator)
 
 generate_target(sparse_affine_grads FROM generators
     GENERATOR sparse_affine_grads
+    AUTOSCHEDULER Halide::Adams2019
+#    SCHEDULE ON
 )
 
 
