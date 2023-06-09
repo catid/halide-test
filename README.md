@@ -1,6 +1,9 @@
 # halide-test
 Test v14/v15 performance regression
 
+Note this same simple codebase runs optimized on Jetson Nano (ARM64), Ubuntu Linux on Intel, and Windows with Visual Studio. Without writing any platform-specific code.
+
+
 ## Setup
 
 Requires an Ubuntu Linux server running on a modern Intel CPU.
