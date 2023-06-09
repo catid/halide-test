@@ -1,5 +1,7 @@
 #include "generators_tools.h"
 
+#include "schedules/sparse_affine_grads.schedule.h"
+
 class sparse_affine_grads_generator : public Halide::Generator<sparse_affine_grads_generator>
 {
 public:
@@ -45,7 +47,7 @@ public:
         local_max.dim(2).set_estimate(2, 2);
         output.set_estimate(x, 1, expected_width / SPARSE_MAXIMA_N).set_estimate(y, 1, expected_height / SPARSE_MAXIMA_N * SPARSE_MAXIMA_SAMPLES).set_estimate(c, N, N);
 
-#if 1
+#if HALIDE_VERSION_MAJOR >= 15
         if (using_autoscheduler()) {
             return;
         }
@@ -62,7 +64,7 @@ public:
         }
         else
         {
-            //apply_schedule_sparse_affine_grads(get_pipeline(), get_target());
+            apply_schedule_sparse_affine_grads(get_pipeline(), get_target());
         }
     }
 };

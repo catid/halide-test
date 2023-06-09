@@ -32,9 +32,9 @@ cd ..
 Run the benchmark:
 
 ```bash
-mkdir build
-cd build
-cmake ..
+mkdir build14
+cd build14
+cmake -DHALIDE_VERSION=14.0.0 ..
 make -j
 ./benchmark
 ```
@@ -46,12 +46,9 @@ Edit the CMakeLists.txt to switch to the other `HALIDE_VERSION=xxx`.  You will a
 Clean and run the benchmark again:
 
 ```bash
-cd ..
-rm -rf build
-
-mkdir build
-cd build
-cmake ..
+mkdir build15
+cd build15
+cmake -DHALIDE_VERSION=15.0.1 ..
 make -j
 ./benchmark
 ```
@@ -59,4 +56,3 @@ make -j
 ## Result
 
 I'd expect them to produce the same speed output, but v15 runs 50% slower than v14 without running an auto-scheduler.
-

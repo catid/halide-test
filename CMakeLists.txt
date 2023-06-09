@@ -5,9 +5,25 @@ project(halide_test CXX)
 ################################################################################
 # Dependencies
 
-# Select version of Halide
-#set(HALIDE_VERSION "14.0.0")
-set(HALIDE_VERSION "15.0.1")
+# Must specify cmake -DHALIDE_VERSION=14.0.0
+if(DEFINED HALIDE_VERSION)
+    set(HALIDE_VERSION ${HALIDE_VERSION} CACHE STRING "Halide version")
+elseif(DEFINED ENV{HALIDE_VERSION})
+    set(HALIDE_VERSION $ENV{HALIDE_VERSION} CACHE STRING "Halide version")
+else()
+    set(HALIDE_VERSION "14.0.0" CACHE STRING "Halide version")
+endif()
+
+string(REGEX REPLACE "^([0-9]+)\\..*" "\\1" HALIDE_VERSION_MAJOR ${HALIDE_VERSION})
+string(REGEX REPLACE "^[0-9]+\\.([0-9]+)\\..*" "\\1" HALIDE_VERSION_MINOR ${HALIDE_VERSION})
+string(REGEX REPLACE "^[0-9]+\\.[0-9]+\\.([0-9]+)" "\\1" HALIDE_VERSION_PATCH ${HALIDE_VERSION})
+
+add_definitions(-DHALIDE_VERSION_MAJOR=${HALIDE_VERSION_MAJOR})
+add_definitions(-DHALIDE_VERSION_MINOR=${HALIDE_VERSION_MINOR})
+add_definitions(-DHALIDE_VERSION_PATCH=${HALIDE_VERSION_PATCH})
+
+message("Halide version specified: ${HALIDE_VERSION}: ${HALIDE_VERSION_MAJOR}.${HALIDE_VERSION_MINOR}.${HALIDE_VERSION_PATCH}")
+
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/Halide")
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/HalideHelpers")
 
@@ -100,8 +116,8 @@ target_link_libraries(generators PRIVATE Halide::Generator)
 
 generate_target(sparse_affine_grads FROM generators
     GENERATOR sparse_affine_grads
-    AUTOSCHEDULER Halide::Adams2019
-#    SCHEDULE ON
+    #AUTOSCHEDULER Halide::Adams2019
+    #SCHEDULE ON
 )
 
 
