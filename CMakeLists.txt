@@ -24,6 +24,7 @@ add_definitions(-DHALIDE_VERSION_PATCH=${HALIDE_VERSION_PATCH})
 
 message("Halide version specified: ${HALIDE_VERSION}: ${HALIDE_VERSION_MAJOR}.${HALIDE_VERSION_MINOR}.${HALIDE_VERSION_PATCH}")
 
+# Expect to find halide under ./distro/
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/Halide")
 list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/HalideHelpers")
 
@@ -74,7 +75,38 @@ target_link_libraries(imgproc
 ################################################################################
 # Generators
 
-set(HALIDE_TARGET_ARCH "x86-64-linux-avx-avx2-f16c-fma-sse41")
+if(CMAKE_SIZEOF_VOID_P EQUAL 8)
+    message(STATUS "64-bit build")
+    set(HALIDE_BITS 64)
+elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
+    message(STATUS "32-bit build")
+    set(HALIDE_BITS 32)
+else()
+    message(FATAL_ERROR "Unknown architecture")
+endif()
+
+if(${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    message(STATUS "Configuring on Linux")
+    set(HALIDE_OS "linux")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Darwin")
+    message(STATUS "Configuring on macOS")
+    set(HALIDE_OS "osx")
+elseif(${CMAKE_SYSTEM_NAME} STREQUAL "Windows")
+    message(STATUS "Configuring on Windows")
+    set(HALIDE_OS "windows")
+else()
+    message(FATAL_ERROR "Unknown OS ${CMAKE_SYSTEM_NAME}")
+endif()
+
+if(${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "arm")
+    message(STATUS "ARM architecture detected")
+    set(HALIDE_TARGET_ARCH "arm-${HALIDE_BITS}-${HALIDE_OS}")
+elseif(${CMAKE_HOST_SYSTEM_PROCESSOR} MATCHES "amd64|AMD64|x86_64|X86_64")
+    message(STATUS "Intel architecture detected")
+    set(HALIDE_TARGET_ARCH "x86-64-${HALIDE_OS}-avx-avx2-f16c-fma-sse41")
+else()
+    message(FATAL_ERROR "Unknown architecture is ${CMAKE_HOST_SYSTEM_PROCESSOR}")
+endif()
 
 function(generate_target)
 

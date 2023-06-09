@@ -48,14 +48,11 @@ public:
         output.set_estimate(x, 1, expected_width / SPARSE_MAXIMA_N).set_estimate(y, 1, expected_height / SPARSE_MAXIMA_N * SPARSE_MAXIMA_SAMPLES).set_estimate(c, N, N);
 
 #if HALIDE_VERSION_MAJOR >= 15
-        if (using_autoscheduler()) {
-            return;
-        }
-#else
+        bool auto_schedule = using_autoscheduler();
+#endif
         if (auto_schedule) {
             return;
         }
-#endif
 
         if (get_target().has_gpu_feature())
         {
