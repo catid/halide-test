@@ -41,7 +41,7 @@ make -j
 
 Note the speed.  Should be the same each time within 10 microseconds.
 
-Edit the CMakeLists.txt to specify `HALIDE_VERSION=v15.0.1`.  You will also need to edit the `generators.cpp` to select the other version of `using_autoscheduler()`.
+Edit the CMakeLists.txt to switch to the other `HALIDE_VERSION=xxx`.  You will also need to edit the `generators.cpp` to select the other version of `using_autoscheduler()`.
 
 Clean and run the benchmark again:
 
