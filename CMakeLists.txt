@@ -81,6 +81,13 @@ target_link_libraries(imgproc
         Threads::Threads
 )
 
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+
+    # Make DLL work like on Linux
+    set_target_properties(imgproc PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS TRUE)
+endif()
+
 
 ################################################################################
 # Generators
