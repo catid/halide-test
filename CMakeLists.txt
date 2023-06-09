@@ -59,8 +59,12 @@ set(CMAKE_CXX_FLAGS_RELEASE "-O3 -march=native")
 # In debug mode, add -DDEBUG
 add_compile_options("$<$<CONFIG:DEBUG>:-DDEBUG>")
 
-# Static library: -fPIC
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+else()
+    # Static library: -fPIC
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fPIC")
+endif()
 
 
 ################################################################################
