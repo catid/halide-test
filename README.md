@@ -1,5 +1,5 @@
 # halide-test
-Test v14/v15 performance regression
+Demonstrate v14/v15 performance regression with .compute_at().
 
 Note this same simple codebase runs optimized on Jetson Nano (ARM64), Ubuntu Linux on Intel, and Windows with Visual Studio. Without writing any platform-specific code.
 
@@ -58,6 +58,19 @@ make -j
 
 ## Results
 
-I'd expect them to produce the same speed output, but v15 runs 50% slower than v14 without running an auto-scheduler.
+Output from V14:
 
-With auto-scheduler enabled, they're about the same.
+```
+(base) ➜  build14 git:(bug15) ✗ ./benchmark
+Median time: 138 usec
+```
+
+Output from V15:
+
+```
+(base) ➜  build15 git:(bug15) ✗ ./benchmark
+Median time: 407 usec
+```
+
+This performance difference increases to 5x slower if I add a RDom inside the pipeline.
+Adding more intermediate functions with .compute_at() also increases the slowdown.
