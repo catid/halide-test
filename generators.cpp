@@ -111,6 +111,7 @@ public:
         output.tile(x, y, xo, yo, xi, yi, 64, 64)
             .vectorize(xi, vsize);
 
+        // Adding this line causes V15 to go 5x slower.
         intermediate.compute_at(output, yi);
     }
 };
