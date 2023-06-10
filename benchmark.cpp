@@ -22,37 +22,24 @@ void Benchmark()
     int w = 1280;
     int h = 1024;
 
-    Halide::Runtime::Buffer<float> gradxy(w, h, 2);
-    Halide::Runtime::Buffer<uint16_t> local_max(w/SPARSE_MAXIMA_N, h/SPARSE_MAXIMA_N*SPARSE_MAXIMA_SAMPLES, 2);
-    Halide::Runtime::Buffer<float> sparse_affine_images(w/SPARSE_MAXIMA_N, h/SPARSE_MAXIMA_N*SPARSE_MAXIMA_SAMPLES, 6);
+    Halide::Runtime::Buffer<float> gradients(w, h, 2);
+    Halide::Runtime::Buffer<float> output(w, h, 4);
+    //Halide::Runtime::Buffer<float> gradients = Halide::Runtime::Buffer<float>::make_interleaved(w, h, 2);
+    //Halide::Runtime::Buffer<float> output = Halide::Runtime::Buffer<float>::make_interleaved(w, h, 4);
 
     // Random x/y image gradients:
 
-    for (int i = 0; i < gradxy.height(); ++i) {
-        for (int j = 0; j < gradxy.width(); ++j) {
-            gradxy(j, i, 0) = dis(gen);
-            gradxy(j, i, 1) = dis(gen);
-        }
-    }
-
-    // Simulate local maxima:
-
-    for (int i = 0; i < local_max.height(); ++i) {
-        for (int j = 0; j < local_max.width(); ++j) {
-            int rx = static_cast<int>( dis(gen) * SPARSE_MAXIMA_N );
-            int ry = static_cast<int>( dis(gen) * SPARSE_MAXIMA_N );
-            int x = SPARSE_MAXIMA_N * j + rx;
-            int y = SPARSE_MAXIMA_N * i + ry;
-
-            gradxy(j, i, 0) = static_cast<uint16_t>(x);
-            gradxy(j, i, 1) = static_cast<uint16_t>(y);
+    for (int i = 0; i < gradients.height(); ++i) {
+        for (int j = 0; j < gradients.width(); ++j) {
+            gradients(j, i, 0) = dis(gen);
+            gradients(j, i, 1) = dis(gen);
         }
     }
 
     const int trials = 10000;
     for (int i = 0; i < trials; ++i) {
         uint64_t t0 = chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count();
-        ImgProcTest(gradxy, local_max, sparse_affine_images);
+        ImgProcTest(gradients, output);
         uint64_t t1 = chrono::duration_cast<chrono::microseconds>(chrono::high_resolution_clock::now().time_since_epoch()).count();
         micros.push_back(t1 - t0);
     }

@@ -163,10 +163,10 @@ add_executable(generators
 )
 target_link_libraries(generators PRIVATE Halide::Generator)
 
-generate_target(sparse_affine_grads FROM generators
-    GENERATOR sparse_affine_grads
-    #AUTOSCHEDULER Halide::Adams2019
-    #SCHEDULE ON
+generate_target(similarity_grads FROM generators
+    GENERATOR similarity_grads
+    AUTOSCHEDULER Halide::Adams2019
+    SCHEDULE ON
 )
 
 

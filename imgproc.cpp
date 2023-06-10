@@ -1,11 +1,10 @@
 #include "imgproc.hpp"
 
-#include "sparse_affine_grads.h"
+#include "similarity_grads.h"
 
 void ImgProcTest(
-    Halide::Runtime::Buffer<float>& gradxy,
-    Halide::Runtime::Buffer<uint16_t>& local_max,
-    Halide::Runtime::Buffer<float>& sparse_affine_images)
+    Halide::Runtime::Buffer<float>& gradients,
+    Halide::Runtime::Buffer<float>& output)
 {
-    sparse_affine_grads(gradxy, local_max, sparse_affine_images);
+    similarity_grads(gradients, output);
 }
