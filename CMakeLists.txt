@@ -169,6 +169,11 @@ generate_target(sparse_affine_grads FROM generators
     #SCHEDULE ON
 )
 
+# Bug in Halide 15
+generate_target(halide15_bug FROM generators
+    GENERATOR halide15_bug
+)
+
 
 ################################################################################
 # Apps

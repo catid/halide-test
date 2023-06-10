@@ -13,6 +13,16 @@ public:
     // Should have same dimensions as local_max
     Output<Buffer<float>> output{"output", 3};
 
+    // Typically used for image coordinates
+    Var x, y, c;
+
+    // Typically used for tile()
+    Var yo, yi, yio, yii, xo, xi, xio, xii, tile_index;
+
+    // Typically used for rfactor()
+    Var u, v;
+    RVar rxo, rxi, rxio, rxii, ryo, ryi, ryio, ryii;
+
     static const int N = 6; // Number of parameters
 
     void generate() 
@@ -67,3 +77,41 @@ public:
 };
 
 HALIDE_REGISTER_GENERATOR(sparse_affine_grads_generator, sparse_affine_grads)
+
+// Reproduces a regression in Halide V15:
+// Using .compute_at() causes huge slow-downs.
+class halide15_bug_generator : public Halide::Generator<halide15_bug_generator>
+{
+public:
+    Input<Buffer<uint8_t>> input{"input", 2};
+    Output<Buffer<uint8_t>> output{"output", 2};
+
+    // Typically used for image coordinates
+    Var x, y, xo, yo, xi, yi;
+
+    Func intermediate{"intermediate"};
+
+    void generate()
+    {
+        Func input_repeat = BoundaryConditions::repeat_edge(input);
+
+        intermediate(x, y) = 2.3456f * cast<float>(input_repeat(x, y));
+
+        output(x, y) = saturating_cast<uint8_t>( intermediate(x, y) * 255.f );
+    }
+
+    void schedule()
+    {
+        const int vsize = natural_vector_size(output.type());
+
+        output.tile(x, y, xo, yo, xi, yi, 64, 64)
+            .vectorize(xi, vsize);
+
+        // This line causes it to run 2-5x slower on V15
+        intermediate.compute_at(output, yi);
+    }
+};
+
+// The second parameter is the name of the C function it produces and the file name.
+// Add your generator to image_processing.h
+HALIDE_REGISTER_GENERATOR(halide15_bug_generator, halide15_bug)

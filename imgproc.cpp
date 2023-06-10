@@ -1,11 +1,11 @@
 #include "imgproc.hpp"
 
-#include "sparse_affine_grads.h"
+#include "halide15_bug.h"
 
 void ImgProcTest(
-    Halide::Runtime::Buffer<float>& gradxy,
-    Halide::Runtime::Buffer<uint16_t>& local_max,
-    Halide::Runtime::Buffer<float>& sparse_affine_images)
+    Halide::Runtime::Buffer<uint8_t>& input,
+    Halide::Runtime::Buffer<uint8_t>& output
+)
 {
-    sparse_affine_grads(gradxy, local_max, sparse_affine_images);
+    halide15_bug(input, output);
 }
