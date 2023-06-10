@@ -1,6 +1,6 @@
 #include "generators_tools.h"
 
-#define ENABLE_AUTO_SCHEDULE
+//#define ENABLE_AUTO_SCHEDULE
 
 #if !defined(ENABLE_AUTO_SCHEDULE)
 #include "schedules/similarity_grads.schedule.h"

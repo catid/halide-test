@@ -165,8 +165,8 @@ target_link_libraries(generators PRIVATE Halide::Generator)
 
 generate_target(similarity_grads FROM generators
     GENERATOR similarity_grads
-    AUTOSCHEDULER Halide::Adams2019
-    SCHEDULE ON
+    #AUTOSCHEDULER Halide::Adams2019
+    #SCHEDULE ON
 )
 
 
