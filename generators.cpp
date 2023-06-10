@@ -93,9 +93,13 @@ public:
 
     void generate()
     {
+        const int radius = 16;
+
         Func input_repeat = BoundaryConditions::repeat_edge(input);
 
-        intermediate(x, y) = 2.3456f * cast<float>(input_repeat(x, y));
+        RDom r(-radius, radius*2);
+
+        intermediate(x, y) = sum(2.3456f * cast<float>(input_repeat(x + r, y)));
 
         output(x, y) = saturating_cast<uint8_t>( intermediate(x, y) * 255.f );
     }
@@ -107,7 +111,6 @@ public:
         output.tile(x, y, xo, yo, xi, yi, 64, 64)
             .vectorize(xi, vsize);
 
-        // This line causes it to run 2-5x slower on V15
         intermediate.compute_at(output, yi);
     }
 };

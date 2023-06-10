@@ -62,15 +62,14 @@ Output from V14:
 
 ```
 (base) ➜  build14 git:(bug15) ✗ ./benchmark
-Median time: 138 usec
+Median time: 1971 usec
 ```
 
 Output from V15:
 
 ```
 (base) ➜  build15 git:(bug15) ✗ ./benchmark
-Median time: 407 usec
+Median time: 11393 usec
 ```
 
-This performance difference increases to 5x slower if I add a RDom inside the pipeline.
-Adding more intermediate functions with .compute_at() also increases the slowdown.
+So the new V15 is 5x slower when the schedule includes a .compute_at().  Sadness. :(
