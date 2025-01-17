@@ -24,15 +24,15 @@ add_definitions(-DHALIDE_VERSION_PATCH=${HALIDE_VERSION_PATCH})
 
 message("Halide version specified: ${HALIDE_VERSION}: ${HALIDE_VERSION_MAJOR}.${HALIDE_VERSION_MINOR}.${HALIDE_VERSION_PATCH}")
 
-# Expect to find halide under ./distro/
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/Halide")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/HalideHelpers")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-arm-64-linux/lib/cmake/Halide")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-arm-64-linux/lib/cmake/HalideHelpers")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-windows/lib/cmake/Halide")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-x86-64-windows/lib/cmake/HalideHelpers")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-arm-64-osx/lib/cmake/Halide")
-list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distro/Halide-${HALIDE_VERSION}-arm-64-osx/lib/cmake/HalideHelpers")
+# Expect to find halide under ./distros/
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/Halide")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-x86-64-linux/lib/cmake/HalideHelpers")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-arm-64-linux/lib/cmake/Halide")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-arm-64-linux/lib/cmake/HalideHelpers")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-x86-64-windows/lib/cmake/Halide")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-x86-64-windows/lib/cmake/HalideHelpers")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-arm-64-osx/lib/cmake/Halide")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/distros/Halide-${HALIDE_VERSION}-arm-64-osx/lib/cmake/HalideHelpers")
 
 find_package(Halide REQUIRED)
 
